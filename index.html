@@ -265,6 +265,13 @@
   .work-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ink-faint); }
   .work-status.live { color: var(--accent); }
   .work-status.live::before { background: var(--accent); box-shadow: 0 0 8px var(--accent-glow); }
+  /* обложка-чат для ботов (воссозданный диалог) */
+  .work-thumb.chat-thumb { display: flex; align-items: center; padding: 14px 16px; background: var(--panel-2); }
+  .work-thumb.chat-thumb::before { content: none; }
+  .mini-chat { width: 100%; display: flex; flex-direction: column; gap: 7px; }
+  .mini-chat .b { max-width: 82%; font-size: 0.74rem; line-height: 1.32; padding: 7px 11px; border-radius: 12px; font-family: var(--body); }
+  .mini-chat .b.bot { background: var(--panel); color: var(--ink-soft); border: 1px solid var(--line-soft); border-top-left-radius: 3px; align-self: flex-start; }
+  .mini-chat .b.user { background: var(--accent); color: #06231f; font-weight: 500; border-top-right-radius: 3px; align-self: flex-end; }
 
   /* ---- TESTIMONIALS ---- */
   .quotes { display: grid; grid-template-columns: 1fr; gap: 18px; }
@@ -625,21 +632,44 @@
 
     <div class="work-group reveal">
       <h3>Чат-боты <span>[ избранное ]</span></h3>
-      <div class="work-grid two">
+      <div class="work-grid">
         <div class="work-card">
-          <div class="work-thumb"><span class="thumb-ph">// диалог с ботом</span></div>
+          <div class="work-thumb chat-thumb">
+            <div class="mini-chat">
+              <div class="b bot">Привет! На какую встречу берём билет?</div>
+              <div class="b user">Москва, на субботу</div>
+              <div class="b bot">Оплата прошла ✅ Билет уже в чате</div>
+            </div>
+          </div>
           <div class="work-body">
-            <div class="work-tags"><span>чат-бот</span></div>
-            <div class="res">[ задача бота — добавим ]</div>
-            <span class="work-status live">работает · можно попробовать</span>
+            <div class="work-tags"><span>чат-бот</span><span>билеты</span><span>ВК</span></div>
+            <div class="res">Регистрация и продажа билетов на встречи в трёх городах — с оплатой и автогенерацией билета прямо в боте.</div>
           </div>
         </div>
         <div class="work-card">
-          <div class="work-thumb"><span class="thumb-ph">// диалог с ботом</span></div>
+          <div class="work-thumb chat-thumb">
+            <div class="mini-chat">
+              <div class="b bot">Пройдите короткий квиз — подберём формат</div>
+              <div class="b user">Готово 👍</div>
+              <div class="b bot">Оплата ✅ Материалы и доступ в клуб открыты</div>
+            </div>
+          </div>
           <div class="work-body">
-            <div class="work-tags"><span>чат-бот</span></div>
-            <div class="res">[ задача бота — добавим ]</div>
-            <span class="work-status">проект завершён · разбор в кейсе</span>
+            <div class="work-tags"><span>чат-бот</span><span>оплата</span><span>клуб</span></div>
+            <div class="res">Продажа онлайн-продукта: квиз, видео эксперта, оплата и автодоступ в закрытый клуб — с рекуррентными платежами.</div>
+          </div>
+        </div>
+        <div class="work-card">
+          <div class="work-thumb chat-thumb">
+            <div class="mini-chat">
+              <div class="b bot">Анахата Йога Фест 🧘 Чем помочь?</div>
+              <div class="b user">Билеты и проживание</div>
+              <div class="b bot">Билет оплачен ✅ Уже у вас в чате</div>
+            </div>
+          </div>
+          <div class="work-body">
+            <div class="work-tags"><span>чат-бот</span><span>фестиваль</span><span>ВК + Telegram</span></div>
+            <div class="res">Большой бот фестиваля: меню, квиз, цены, FAQ, связь с менеджером и билеты с оплатой — мультиканально в ВК и Telegram.</div>
           </div>
         </div>
       </div>
