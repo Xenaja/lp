@@ -52,7 +52,7 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 70px; }
 
   body {
     background: var(--bg);
@@ -106,6 +106,31 @@
   .skip-link:focus { left: 0; }
 
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+  /* ---- TOP NAV ---- */
+  .topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 60; background: rgba(15,14,12,0.72); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line-soft); }
+  .nav-wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .brand { font-family: var(--mono); font-weight: 600; font-size: 0.9rem; color: var(--ink); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; position: relative; z-index: 62; }
+  .brand::before { content: ">_"; color: var(--accent); }
+  .nav-toggle { display: inline-flex; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; background: none; border: none; cursor: pointer; padding: 0; position: relative; z-index: 62; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--ink); border-radius: 2px; margin: 0 auto; transition: transform .3s ease, opacity .3s ease; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-links { position: fixed; inset: 0; z-index: 61; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; background: rgba(15,14,12,0.97); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); transform: translateX(100%); transition: transform .35s cubic-bezier(0.16,1,0.3,1); }
+  .nav-links.open { transform: none; }
+  .nav-links a { font-family: var(--mono); font-size: 1.15rem; color: var(--ink-soft); text-decoration: none; transition: color .2s ease; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta { border: 1px solid var(--accent-dim); color: var(--accent); padding: 12px 26px; border-radius: 100px; background: rgba(94,234,212,0.06); min-height: 48px; display: inline-flex; align-items: center; touch-action: manipulation; }
+  .nav-cta:hover { background: var(--accent); color: #06231f; border-color: var(--accent); }
+  body.menu-open { overflow: hidden; }
+
+  @media (min-width: 860px) {
+    .nav-toggle { display: none; }
+    .nav-links { position: static; inset: auto; transform: none; flex-direction: row; gap: 26px; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    .nav-links a { font-size: 0.82rem; }
+    .nav-cta { font-size: 0.82rem; padding: 8px 16px; min-height: 40px; }
+  }
 
   /* Моно-лейбл с // */
   .eyebrow {
@@ -525,6 +550,19 @@
 
 <a href="#content" class="skip-link">Перейти к содержимому</a>
 
+<nav class="topbar" id="top">
+  <div class="wrap nav-wrap">
+    <a href="#top" class="brand">Ксения Телегина</a>
+    <button class="nav-toggle" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="navlinks">
+      <a href="#about">Обо мне</a>
+      <a href="#works">Работы</a>
+      <a href="#pricing">Цены</a>
+      <a href="#final" class="nav-cta">Обсудить задачу</a>
+    </div>
+  </div>
+</nav>
+
 <header class="hero">
   <div class="wrap">
     <div class="hero-tag"><span class="dot"></span>лендинги · чат-боты · приложения</div>
@@ -548,7 +586,7 @@
   </div>
 </section>
 
-<section>
+<section id="about">
   <div class="wrap">
     <div class="about-grid">
       <div class="about-photo reveal">
@@ -825,7 +863,7 @@
   </div>
 </section>
 
-<section>
+<section id="pricing">
   <div class="wrap">
     <div class="sec-head center reveal">
       <span class="eyebrow">цены</span>
@@ -1127,6 +1165,22 @@
         el.style.setProperty('--my', (e.clientY - r.top) + 'px');
       });
     });
+  })();
+
+  /* Меню (мобильный гамбургер) */
+  (function(){
+    const toggle = document.querySelector('.nav-toggle');
+    const links = document.getElementById('navlinks');
+    if (!toggle || !links) return;
+    function setOpen(open){
+      links.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+      document.body.classList.toggle('menu-open', open);
+    }
+    toggle.addEventListener('click', () => setOpen(!links.classList.contains('open')));
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
   })();
 </script>
 
