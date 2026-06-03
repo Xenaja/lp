@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="ru" class="no-js">
+<head>
+<meta charset="UTF-8">
+<script>document.documentElement.classList.remove('no-js');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сайты, чат-боты и приложения под вашу задачу — маркетинг + разработка</title>
+<meta name="description" content="Сайты и чат-боты, которые приводят клиентов. Маркетинг и разработка в одних руках — без переводчика между дизайнером и программистом.">
+
+<!-- Open Graph: превью при отправке ссылки в Telegram / соцсети.
+     TODO: заменить og:url и og:image на реальные после публикации.
+     Картинку 1200×630 положить рядом и указать абсолютный URL. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Сайты, чат-боты и приложения под вашу задачу">
+<meta property="og:description" content="Маркетинг и разработка в одних руках. Можно прийти без готового ТЗ — дальше разберёмся вместе.">
+<meta property="og:url" content="https://example.com/">
+<meta property="og:image" content="https://example.com/og-cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- favicon: inline svg, каретка терминала в акцентном цвете -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230f0e0c'/><text x='18' y='72' font-family='monospace' font-size='62' fill='%235eead4'>&gt;_</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* ---- Палитра: тёмный тёплый уголь + один холодный акцент ---- */
+    --bg:          #0f0e0c;   /* основной фон, тёплый уголь */
+    --bg-2:        #14120f;   /* слегка светлее — секции */
+    --panel:       #181610;   /* панели/карточки */
+    --panel-2:     #1d1b14;   /* приподнятые панели */
+    --line:        rgba(94, 234, 212, 0.12);   /* тонкие линии акцентом */
+    --line-soft:   rgba(245, 240, 225, 0.08);
+
+    --ink:         #f3efe2;   /* основной светлый текст */
+    --ink-soft:    #b6b0a0;   /* приглушённый текст */
+    --ink-faint:   #7d776a;   /* совсем тихий текст / лейблы */
+
+    --accent:      #5eead4;   /* холодный цианово-мятный акцент */
+    --accent-dim:  #3fbfac;   /* притушённый акцент для hover */
+    --accent-glow: rgba(94, 234, 212, 0.42);
+
+    --display: 'Familjen Grotesk', system-ui, sans-serif;
+    --body:    'Hanken Grotesk', system-ui, sans-serif;
+    --mono:    'IBM Plex Mono', ui-monospace, monospace;
+
+    --container: 1120px;
+    --pad-x: 22px;
+    --sec-y: 72px;
+    --radius: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.68;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Атмосферный фон: радиальные свечения акцентом + тёплое сверху */
+  body::after {
+    content: "";
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 70% 45% at 50% -8%, rgba(94,234,212,0.10), transparent 70%),
+      radial-gradient(ellipse 50% 40% at 100% 18%, rgba(94,234,212,0.06), transparent 70%),
+      radial-gradient(ellipse 60% 50% at 0% 88%, rgba(232,168,90,0.05), transparent 72%);
+  }
+  /* Тонкая сетка-«редактор» + зерно */
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(245,240,225,0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,240,225,0.018) 1px, transparent 1px),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    background-size: 46px 46px, 46px 46px, 160px 160px;
+    opacity: 0.55;
+    mix-blend-mode: soft-light;
+  }
+
+  .wrap { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 var(--pad-x); position: relative; z-index: 2; }
+  .narrow { max-width: 760px; }
+
+  section { padding: var(--sec-y) 0; position: relative; }
+
+  h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.1; letter-spacing: -0.015em; }
+
+  a { color: var(--accent); }
+
+  /* Skip-link для клавиатуры */
+  .skip-link {
+    position: absolute; left: -9999px; top: 0; z-index: 999;
+    background: var(--accent); color: #06231f; font-family: var(--mono);
+    font-size: 0.9rem; padding: 12px 18px; border-radius: 0 0 10px 0; text-decoration: none;
+  }
+  .skip-link:focus { left: 0; }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+  /* Моно-лейбл с // */
+  .eyebrow {
+    font-family: var(--mono); font-weight: 500; font-size: 0.74rem; letter-spacing: 0.04em;
+    color: var(--accent); margin-bottom: 18px; display: inline-flex; align-items: center; gap: 8px;
+    text-transform: lowercase;
+  }
+  .eyebrow::before { content: "//"; opacity: 0.6; }
+
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  .no-js .reveal { opacity: 1; transform: none; }
+
+  /* лёгкий каскад появления внутри групп */
+  .cards .reveal:nth-child(2), .quotes .reveal:nth-child(2), .price-grid .reveal:nth-child(2),
+  .myth-list .reveal:nth-child(2), .steps .reveal:nth-child(2), .faq-list .reveal:nth-child(2) { transition-delay: .07s; }
+  .cards .reveal:nth-child(3), .price-grid .reveal:nth-child(3), .quotes .reveal:nth-child(3),
+  .myth-list .reveal:nth-child(3), .steps .reveal:nth-child(3), .faq-list .reveal:nth-child(3) { transition-delay: .14s; }
+  .myth-list .reveal:nth-child(4), .steps .reveal:nth-child(4), .faq-list .reveal:nth-child(4) { transition-delay: .21s; }
+  .steps .reveal:nth-child(5), .faq-list .reveal:nth-child(5) { transition-delay: .28s; }
+
+  /* ---- BUTTONS ---- */
+  .btn {
+    font-family: var(--mono); font-weight: 500; font-size: 0.94rem; line-height: 1.3;
+    min-height: 48px; padding: 13px 26px; border-radius: 12px;
+    border: 1px solid transparent; cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, border-color 0.22s ease, color 0.22s ease;
+  }
+  .btn-primary {
+    background: var(--accent); color: #06231f; font-weight: 600;
+    box-shadow: 0 0 0 1px rgba(94,234,212,0.35), 0 10px 30px -8px var(--accent-glow);
+  }
+  .btn-primary::before { content: "›"; font-size: 1.05rem; opacity: 0.85; }
+  .btn-primary:hover { background: var(--accent-dim); transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(94,234,212,0.5), 0 16px 38px -8px var(--accent-glow); }
+  .btn-ghost { background: rgba(94,234,212,0.04); color: var(--ink); border: 1px solid var(--line); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  /* ---- HERO ---- */
+  .hero { padding: 104px 0 84px; text-align: center; position: relative; overflow: hidden; }
+
+  @keyframes heroIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+  .hero .wrap > * { opacity: 0; animation: heroIn 0.8s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .hero .hero-tag { animation-delay: 0.05s; }
+  .hero h1       { animation-delay: 0.22s; }
+  .hero .lead    { animation-delay: 0.46s; }
+  .hero .cta-row { animation-delay: 0.66s; }
+  .hero .micro   { animation-delay: 0.84s; }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--mono); font-size: 0.76rem; color: var(--ink-soft);
+    background: var(--panel); border: 1px solid var(--line);
+    padding: 8px 16px; border-radius: 100px; margin-bottom: 30px;
+  }
+  .hero-tag .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); animation: pulse 2.4s infinite; }
+  @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(94,234,212,0.5)} 70%{box-shadow:0 0 0 8px rgba(94,234,212,0)} 100%{box-shadow:0 0 0 0 rgba(94,234,212,0)} }
+
+  .hero h1 { font-size: clamp(2.3rem, 8vw, 4.2rem); max-width: 16ch; margin: 0 auto; }
+  .hero h1 em { font-style: normal; color: var(--accent); text-shadow: 0 0 28px var(--accent-glow); }
+  .hero .lead {
+    font-family: var(--mono); font-size: clamp(1rem, 4vw, 1.4rem); color: var(--ink-soft);
+    margin: 24px auto 0; font-weight: 400; min-height: 1.7em;
+  }
+  .hero .lead .cursor { color: var(--accent); animation: blink 1.1s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 36px; }
+  .hero .micro { margin-top: 24px; font-family: var(--mono); font-size: 0.82rem; color: var(--ink-faint); }
+
+  /* ---- EMPATHY ---- */
+  .empathy { background: var(--bg-2); border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+  .empathy p { font-size: 1.1rem; color: var(--ink-soft); margin-bottom: 20px; }
+  .empathy p:last-child { margin-bottom: 0; }
+  .empathy strong { color: var(--ink); font-weight: 600; }
+  .empathy .pull {
+    font-family: var(--display); font-size: clamp(1.3rem, 4.5vw, 1.55rem); line-height: 1.4; color: var(--ink);
+    border-left: 2px solid var(--accent); padding-left: 22px; margin-top: 10px; font-weight: 500;
+  }
+
+  /* ---- SECTION HEADINGS ---- */
+  .sec-head { max-width: 38ch; margin-bottom: 40px; }
+  .sec-head.center { margin-left: auto; margin-right: auto; text-align: center; max-width: 30ch; }
+  .sec-head.center .eyebrow { justify-content: center; }
+  .sec-head h2 { font-size: clamp(1.9rem, 5.4vw, 2.9rem); line-height: 1.14; }
+
+  /* ---- ABOUT ---- */
+  .about-grid { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: center; }
+  .about-photo {
+    aspect-ratio: 4/5; max-width: 300px; border-radius: var(--radius);
+    background: linear-gradient(150deg, rgba(94,234,212,0.14), rgba(125,119,106,0.10));
+    border: 1px solid var(--line);
+    display: grid; place-items: center; color: var(--ink-faint); font-family: var(--mono); font-size: 0.8rem;
+    position: relative; overflow: hidden;
+  }
+  .about-photo::before {
+    content: ""; position: absolute; top: 12px; left: 12px; z-index: 2;
+    width: 9px; height: 9px; border-radius: 50%; background: var(--accent);
+    box-shadow: 16px 0 0 rgba(232,168,90,0.7), 32px 0 0 rgba(245,240,225,0.4);
+  }
+  .about-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .about-text h2 { font-size: clamp(1.7rem, 6vw, 2.4rem); margin-bottom: 20px; }
+  .about-text p { color: var(--ink-soft); margin-bottom: 15px; }
+  .about-text strong { color: var(--ink); font-weight: 600; }
+
+  /* ---- CARDS (чем отличаюсь) ---- */
+  .cards { display: grid; grid-template-columns: 1fr; gap: 18px; align-items: start; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line-soft); border-radius: var(--radius);
+    padding: 28px 26px 30px; position: relative; overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+  .card:hover { transform: translateY(-5px); border-color: var(--line); box-shadow: 0 20px 44px -16px rgba(0,0,0,0.7); }
+  .card:hover::before { transform: scaleX(1); }
+  .card-num { font-family: var(--mono); font-size: 1.2rem; font-weight: 500; color: var(--accent); margin-bottom: 16px; display: block; opacity: 0.9; }
+  .card-num::before { content: "// "; opacity: 0.5; }
+  .card h3 { font-size: 1.22rem; margin-bottom: 11px; }
+  .card p { font-size: 0.96rem; color: var(--ink-soft); }
+
+  /* ---- WORKS ---- */
+  .works { background: var(--bg-2); border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+  .work-group { margin-bottom: 42px; }
+  .work-group:last-child { margin-bottom: 0; }
+  .work-group > h3 { font-size: 1.35rem; margin-bottom: 20px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .work-group > h3 span { font-family: var(--mono); font-size: 0.72rem; font-weight: 500; color: var(--accent); }
+  .work-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  .work-card {
+    background: var(--panel); border: 1px solid var(--line-soft); border-radius: 14px; overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .work-card:hover { transform: translateY(-4px); border-color: var(--line); box-shadow: 0 18px 40px -18px rgba(0,0,0,0.7); }
+  .work-thumb {
+    aspect-ratio: 16/10; display: grid; place-items: center; color: var(--ink-faint);
+    font-family: var(--mono); font-size: 0.78rem; position: relative;
+    background:
+      repeating-linear-gradient(135deg, rgba(94,234,212,0.05) 0 10px, transparent 10px 20px),
+      var(--panel-2);
+  }
+  .work-thumb::before { content: ""; position: absolute; top: 12px; left: 12px; width: 8px; height: 8px; border-radius: 50%; background: rgba(245,240,225,0.35); box-shadow: 14px 0 0 rgba(245,240,225,0.35), 28px 0 0 rgba(245,240,225,0.35); }
+  .work-body { padding: 17px 19px 21px; }
+  .work-body .task { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); margin-bottom: 7px; }
+  .work-body .task::before { content: "$ "; color: var(--accent); }
+  .work-body .res { font-size: 0.96rem; color: var(--ink); font-weight: 500; line-height: 1.4; }
+  .apps-text { font-size: 1.05rem; color: var(--ink-soft); max-width: 64ch; }
+  .apps-text strong { color: var(--ink); font-weight: 600; }
+  /* карточка-работа: кликабельна, ведёт на страницу-кейс (когда готова) */
+  a.work-card { text-decoration: none; color: inherit; }
+  .work-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: object-position 4.5s ease; }
+  .thumb-ph { position: relative; z-index: 1; }
+  .work-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 11px; }
+  .work-tags span { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.04em; color: var(--accent); border: 1px solid var(--line); border-radius: 100px; padding: 3px 9px; }
+  .work-more { display: inline-flex; align-items: center; gap: 6px; margin-top: 13px; font-family: var(--mono); font-size: 0.76rem; color: var(--accent); transition: gap 0.2s ease; }
+  a.work-card:hover .work-more { gap: 11px; }
+  .work-status { display: inline-flex; align-items: center; gap: 7px; margin-top: 13px; font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
+  .work-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ink-faint); }
+  .work-status.live { color: var(--accent); }
+  .work-status.live::before { background: var(--accent); box-shadow: 0 0 8px var(--accent-glow); }
+
+  /* ---- TESTIMONIALS ---- */
+  .quotes { display: grid; grid-template-columns: 1fr; gap: 18px; }
+  .quote { background: var(--panel); border: 1px solid var(--line-soft); border-radius: var(--radius); padding: 28px 26px; position: relative; }
+  .quote .mark { font-family: var(--display); font-size: 3rem; line-height: 0.5; color: var(--accent); position: absolute; top: 26px; right: 26px; opacity: 0.3; }
+  .quote p { font-size: 1.02rem; color: var(--ink); font-family: var(--display); margin-bottom: 18px; font-weight: 500; }
+  .quote .who { display: flex; align-items: center; gap: 12px; }
+  .quote .ava { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), rgba(125,119,106,0.6)); flex-shrink: 0; }
+  .quote .who b { font-family: var(--body); font-weight: 700; font-size: 0.95rem; display: block; color: var(--ink); }
+  .quote .who small { font-family: var(--mono); color: var(--ink-faint); font-size: 0.76rem; }
+
+  /* ---- MYTHS ---- */
+  .myths { position: relative; overflow: hidden; }
+  .myths::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse 60% 70% at 12% 0%, rgba(94,234,212,0.08), transparent 60%); }
+  .myths .wrap { z-index: 2; }
+  .myth-list { display: grid; gap: 14px; }
+  .myth {
+    background: var(--panel); border: 1px solid var(--line-soft); border-radius: var(--radius);
+    padding: 24px 26px; display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start;
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+  .myth:hover { border-color: var(--line); background: var(--panel-2); }
+  .myth .tag { font-family: var(--mono); font-size: 0.9rem; color: var(--accent); line-height: 1.5; }
+  .myth .tag::before { content: "// "; opacity: 0.55; }
+  .myth .ans { font-size: 0.98rem; color: var(--ink-soft); }
+  .myth .ans b { color: var(--ink); font-weight: 700; }
+
+  /* ---- QUIZ (терминал) ---- */
+  .quiz-wrap {
+    background: var(--panel); color: var(--ink); border-radius: 20px;
+    box-shadow: 0 30px 70px -24px rgba(0,0,0,0.8); position: relative; overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .quiz-bar { display: flex; align-items: center; gap: 8px; padding: 13px 20px; border-bottom: 1px solid var(--line-soft); font-family: var(--mono); font-size: 0.74rem; color: var(--ink-faint); background: rgba(0,0,0,0.18); }
+  .quiz-bar .dots { display: flex; gap: 7px; }
+  .quiz-bar .dots i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .quiz-bar .dots i:nth-child(1){ background:#e0664f; }
+  .quiz-bar .dots i:nth-child(2){ background:#e8a83c; }
+  .quiz-bar .dots i:nth-child(3){ background:var(--accent); }
+  .quiz-bar .fname { margin-left: 6px; opacity: 0.8; }
+  .quiz-body { padding: 32px 24px 38px; position: relative; }
+  .quiz-body::after { content: ""; position: absolute; top: -50px; right: -60px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(94,234,212,0.16), transparent 70%); pointer-events: none; }
+  .quiz-body .eyebrow { position: relative; }
+  .quiz-body h2 { font-size: clamp(1.5rem, 5vw, 2.1rem); max-width: 22ch; position: relative; }
+  .quiz-intro { color: var(--ink-soft); margin: 16px 0 30px; max-width: 60ch; position: relative; font-size: 0.98rem; }
+  .quiz-stage { position: relative; min-height: 250px; }
+  .q-step { display: none; animation: fade 0.4s ease; }
+  .q-step.active { display: block; }
+  @keyframes fade { from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none} }
+  .q-progress { font-family: var(--mono); font-size: 0.74rem; color: var(--ink-faint); margin-bottom: 22px; display: flex; align-items: center; gap: 12px; }
+  .q-progress .track { flex: 1; height: 4px; background: rgba(245,240,225,0.08); border-radius: 4px; overflow: hidden; }
+  .q-progress .fill { height: 100%; width: 25%; background: linear-gradient(90deg, var(--accent-dim), var(--accent)); border-radius: 4px; transition: width 0.4s cubic-bezier(0.16,1,0.3,1); box-shadow: 0 0 10px var(--accent-glow); }
+  .q-text { font-family: var(--display); font-size: clamp(1.2rem, 4.5vw, 1.4rem); margin-bottom: 22px; line-height: 1.3; font-weight: 600; }
+  .q-text::before { content: "> "; font-family: var(--mono); color: var(--accent); font-size: 1rem; }
+  .q-opts { display: grid; gap: 11px; }
+  .q-opt {
+    background: rgba(94,234,212,0.03); border: 1px solid var(--line-soft); color: var(--ink);
+    text-align: left; padding: 15px 20px; border-radius: 12px; font-family: var(--body); font-size: 0.98rem;
+    cursor: pointer; min-height: 48px; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+    transition: all 0.2s ease; display: flex; align-items: center; gap: 13px;
+  }
+  .q-opt::before { content: "›"; font-family: var(--mono); color: var(--accent); font-size: 1.2rem; transition: transform 0.2s ease; flex-shrink: 0; }
+  .q-opt:hover { background: rgba(94,234,212,0.08); border-color: var(--line); transform: translateX(3px); }
+  .q-opt:hover::before { transform: translateX(3px); }
+  .q-result { display: none; animation: fade 0.5s ease; }
+  .q-result.active { display: block; }
+  .q-result .badge { display: inline-flex; align-items:center; gap:7px; font-family: var(--mono); font-weight: 500; font-size: 0.72rem; color: #06231f; background: var(--accent); padding: 7px 13px; border-radius: 8px; margin-bottom: 18px; }
+  .q-result .badge::before { content: "●"; font-size: 0.55rem; }
+  .q-result h3 { font-size: 1.45rem; margin-bottom: 12px; }
+  .q-result p { color: var(--ink-soft); margin-bottom: 12px; }
+  .q-result .extra { background: rgba(94,234,212,0.05); border-left: 2px solid var(--accent); padding: 15px 18px; border-radius: 10px; font-size: 0.93rem; color: var(--ink-soft); margin: 16px 0 24px; }
+  .q-restart { background: none; border: none; color: var(--accent); font-family: var(--mono); font-size: 0.82rem; cursor: pointer; text-decoration: underline; margin-left: 14px; min-height: 44px; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  .quiz-foot { margin-top: 26px; font-size: 0.9rem; color: var(--ink-faint); position: relative; font-family: var(--mono); }
+
+  /* ---- PRICING ---- */
+  .price-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  .price { background: var(--panel); border: 1px solid var(--line-soft); border-radius: var(--radius); padding: 30px 26px; transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+  .price:hover { transform: translateY(-5px); border-color: var(--line); box-shadow: 0 20px 44px -18px rgba(0,0,0,0.7); }
+  .price .term { font-family: var(--mono); font-size: 0.74rem; color: var(--accent); margin-bottom: 14px; }
+  .price .term::before { content: "// "; opacity: 0.5; }
+  .price h3 { font-size: 1.4rem; margin-bottom: 16px; }
+  .price .lines { list-style: none; }
+  .price .lines li { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-bottom: 1px dashed var(--line-soft); font-size: 0.95rem; gap: 12px; color: var(--ink-soft); }
+  .price .lines li:last-child { border-bottom: none; }
+  .price .lines b { font-family: var(--mono); font-weight: 600; color: var(--accent); white-space: nowrap; }
+  .price .note { font-size: 0.92rem; color: var(--ink-soft); }
+  .price-foot { text-align: center; margin-top: 34px; font-size: 1.02rem; color: var(--ink-soft); max-width: 54ch; margin-left: auto; margin-right: auto; }
+
+  /* ---- PROCESS ---- */
+  .process { background: var(--bg-2); border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+  .steps { display: grid; gap: 0; max-width: 780px; }
+  .step { display: grid; grid-template-columns: 56px 1fr; gap: 20px; padding: 22px 18px; align-items: start; border-bottom: 1px solid var(--line-soft); position: relative; border-radius: 10px; }
+  .step:last-child { border-bottom: none; }
+  .step .n { font-family: var(--mono); font-size: 0.88rem; font-weight: 600; color: var(--accent); padding-top: 5px; }
+  .step h3 { font-size: 1.18rem; margin-bottom: 5px; }
+  .step p { font-size: 0.96rem; color: var(--ink-soft); }
+
+  /* ---- FAQ ---- */
+  .faq-list { display: grid; gap: 11px; max-width: 780px; }
+  .faq-item { background: var(--panel); border: 1px solid var(--line-soft); border-radius: 14px; overflow: hidden; transition: border-color 0.3s ease; position: relative; }
+  .faq-item[open] { border-color: var(--line); }
+  .faq-item summary { list-style: none; cursor: pointer; padding: 20px 22px; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-family: var(--display); font-size: 1.08rem; line-height: 1.3; color: var(--ink); font-weight: 600; min-height: 48px; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: "+"; font-family: var(--mono); font-size: 1.4rem; color: var(--accent); transition: transform 0.3s ease; flex-shrink: 0; }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item .faq-body { padding: 0 22px 22px; color: var(--ink-soft); font-size: 0.98rem; }
+
+  /* ---- FINAL + FORM ---- */
+  .final { text-align: center; }
+  .final-box {
+    background: linear-gradient(180deg, var(--panel), var(--bg-2));
+    border-radius: 22px; padding: 56px 24px; color: var(--ink); position: relative; overflow: hidden;
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,0.85); border: 1px solid var(--line);
+  }
+  .final-box::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse 70% 80% at 50% 0%, rgba(94,234,212,0.12), transparent 62%); }
+  .final-box > * { position: relative; }
+  .final-box h2 { font-size: clamp(1.9rem, 6.5vw, 2.8rem); }
+  .final-box > p { color: var(--ink-soft); font-size: 1.08rem; max-width: 46ch; margin: 18px auto 30px; }
+
+  .lead-form { max-width: 440px; margin: 26px auto 0; display: grid; gap: 12px; text-align: left; }
+  .lead-form .field { display: grid; gap: 6px; }
+  .lead-form label { font-family: var(--mono); font-size: 0.74rem; color: var(--ink-soft); letter-spacing: 0.02em; }
+  .lead-form input, .lead-form textarea {
+    width: 100%; font-family: var(--body); font-size: 16px; color: var(--ink);
+    background: rgba(245,240,225,0.04); border: 1px solid var(--line-soft);
+    border-radius: 12px; padding: 13px 15px; min-height: 48px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .lead-form input::placeholder, .lead-form textarea::placeholder { color: var(--ink-faint); }
+  .lead-form input:focus, .lead-form textarea:focus { outline: none; border-color: var(--accent); background: rgba(94,234,212,0.05); }
+  .lead-form textarea { resize: vertical; min-height: 88px; }
+  .lead-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .lead-form .consent { display: flex; gap: 10px; align-items: flex-start; margin-top: 4px; font-family: var(--body); font-size: 0.84rem; line-height: 1.45; color: var(--ink-soft); text-align: left; cursor: pointer; }
+  .lead-form .consent input { width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; accent-color: var(--accent); cursor: pointer; }
+  .lead-form .consent a { color: var(--accent); text-decoration: underline; }
+  .lead-form button { margin-top: 6px; width: 100%; }
+  .lead-form button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .form-status { font-family: var(--mono); font-size: 0.84rem; margin-top: 6px; min-height: 1.2em; text-align: center; }
+  .form-status.ok { color: var(--accent); }
+  .form-status.err { color: #f0a85a; }
+  .form-alt { margin-top: 24px; font-family: var(--mono); font-size: 0.82rem; color: var(--ink-faint); }
+
+  .contacts { margin-top: 14px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .contacts a { font-family: var(--mono); font-size: 0.84rem; color: var(--ink-soft); text-decoration: none; border: 1px solid var(--line-soft); padding: 10px 18px; border-radius: 100px; min-height: 44px; display: inline-flex; align-items: center; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: all 0.2s; }
+  .contacts a:hover { color: var(--accent); border-color: var(--accent); background: rgba(94,234,212,0.06); }
+
+  /* ---- FOOTER ---- */
+  footer { text-align: center; padding: 38px 0 calc(86px + env(safe-area-inset-bottom)); color: var(--ink-faint); font-family: var(--mono); font-size: 0.8rem; }
+  footer a { color: var(--ink-faint); text-decoration: underline; }
+  footer a:hover { color: var(--accent); }
+
+  /* ---- STICKY CTA (мобайл) ---- */
+  .sticky-cta {
+    position: fixed; left: 14px; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom)); z-index: 50;
+    text-align: center; min-height: 50px; padding: 14px 24px; border-radius: 14px;
+    background: var(--accent); color: #06231f; font-family: var(--mono); font-weight: 600; font-size: 0.95rem;
+    text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 12px 30px -8px var(--accent-glow); touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+  }
+  .sticky-cta::before { content: "›"; }
+
+  /* ============ TABLET ≥640px ============ */
+  @media (min-width: 640px) {
+    :root { --pad-x: 32px; --sec-y: 84px; }
+    body { font-size: 18px; }
+    .hero { padding: 116px 0 92px; }
+    .cards { grid-template-columns: repeat(3, 1fr); }
+    .cards .card:nth-child(2) { margin-top: 36px; }
+    .cards .card:nth-child(3) { margin-top: 16px; }
+    .work-grid { grid-template-columns: repeat(2, 1fr); }
+    .quotes { grid-template-columns: repeat(2, 1fr); }
+    .price-grid { grid-template-columns: repeat(3, 1fr); }
+    .myth { grid-template-columns: 230px 1fr; gap: 24px; }
+    .quiz-body { padding: 40px 40px 46px; }
+    .final-box { padding: 68px 40px; }
+    .step { grid-template-columns: 64px 1fr; }
+  }
+
+  /* ============ DESKTOP ≥1024px ============ */
+  @media (min-width: 1024px) {
+    :root { --sec-y: 92px; }
+    .hero { padding: 128px 0 100px; }
+    .about-grid { grid-template-columns: 0.62fr 1fr; gap: 52px; }
+    .about-photo { max-width: none; }
+    .quotes { grid-template-columns: repeat(3, 1fr); }
+    .work-grid { grid-template-columns: repeat(3, 1fr); }
+    .work-grid.two { grid-template-columns: repeat(2, 1fr); max-width: 720px; }
+    .sticky-cta { display: none; }
+    footer { padding: 44px 0 60px; }
+  }
+
+  /* ---- reduced motion ---- */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+    .reveal { opacity: 1 !important; transform: none !important; }
+    .hero .wrap > * { opacity: 1 !important; }
+  }
+
+  /* ============ ОЖИВЛЕНИЕ ============ */
+  /* 1) спотлайт за курсором на карточках */
+  .card::after, .price::after, .quote::after, .step::after, .faq-item::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    opacity: 0; transition: opacity .35s ease;
+    background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(94,234,212,0.10), transparent 62%);
+  }
+  .card:hover::after, .price:hover::after, .quote:hover::after, .step:hover::after, .faq-item:hover::after { opacity: 1; }
+
+  /* 2) живой фон hero — медленная аврора */
+  .hero::before {
+    content: ""; position: absolute; inset: -25% -15% auto -15%; height: 150%; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 45% 38% at 28% 30%, rgba(94,234,212,0.18), transparent 60%),
+      radial-gradient(ellipse 40% 38% at 76% 42%, rgba(232,168,90,0.09), transparent 62%);
+    filter: blur(12px); animation: aurora 18s ease-in-out infinite alternate;
+  }
+  @keyframes aurora {
+    from { transform: translate3d(-3%, -1%, 0) scale(1); }
+    to   { transform: translate3d(4%, 3%, 0) scale(1.12); }
+  }
+
+  /* 3) бегущая mono-строка */
+  .ticker { overflow: hidden; border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); background: var(--bg-2); padding: 14px 0; position: relative; z-index: 2; }
+  .ticker__track { display: inline-flex; align-items: center; gap: 26px; white-space: nowrap; font-family: var(--mono); font-size: 0.92rem; color: var(--ink-soft); animation: ticker 32s linear infinite; will-change: transform; }
+  .ticker__track i { color: var(--accent); font-style: normal; opacity: 0.7; }
+  .ticker:hover .ticker__track { animation-play-state: paused; }
+  @keyframes ticker { to { transform: translateX(-50%); } }
+
+  /* 4) оживающее превью работ — панорама скриншота при наведении */
+  .work-card:hover .work-thumb img { object-position: bottom center; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero::before { animation: none; }
+    .ticker__track { animation: none; }
+    .work-card:hover .work-thumb img { object-position: top center; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#content" class="skip-link">Перейти к содержимому</a>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-tag"><span class="dot"></span>лендинги · чат-боты · приложения</div>
+    <h1>Сайты и чат-боты, которые <em>приводят клиентов</em></h1>
+    <p class="lead"><span class="type">Маркетинг и разработка в одних руках</span><span class="cursor">_</span></p>
+    <div class="cta-row">
+      <a href="#final" class="btn btn-primary">Обсудить задачу</a>
+      <a href="#works" class="btn btn-ghost">Посмотреть работы</a>
+    </div>
+    <p class="micro">Не просто красивая обложка, а продукт под результат. Можно прийти без ТЗ.</p>
+  </div>
+</header>
+
+<main id="content">
+
+<section class="empathy" id="empathy">
+  <div class="wrap narrow">
+    <p class="reveal">Нужен сайт или бот, но подрядчики говорят на своём языке, сроки плывут, а на выходе — красивая обложка, которая не приводит клиентов. Знакомо.</p>
+    <p class="reveal">Чаще всего причина одна: маркетолог, дизайнер и программист работают порознь, а вы — переводчик между ними. Смысл теряется по дороге, и страдает результат.</p>
+    <p class="pull reveal">Я закрываю и&nbsp;маркетинг, и&nbsp;разработку — поэтому продукт собирается как единое целое, а не как сумма несогласованных кусков.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-photo reveal">
+        <video class="about-video" autoplay muted loop playsinline preload="metadata" poster="visual/me-poster.jpg" aria-label="Ксения Телегина">
+          <source src="visual/me-loop.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="about-text reveal">
+        <span class="eyebrow">кто будет делать</span>
+        <h2>Привет, я Ксения Телегина</h2>
+        <p>Я совмещаю два навыка, которые обычно живут в разных людях, — <strong>маркетинг и разработку</strong>. Поэтому со мной не нужно быть посредником между стратегом, дизайнером и программистом: я веду задачу от смысла до запуска.</p>
+        <p>Сайты и чат-боты я собираю сама. Для сложных приложений подключаю backend-разработчика, с которым давно работаю в паре, — так вы получаете и скорость одного исполнителя, и силу команды там, где она нужна.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">чем я отличаюсь</span>
+      <h2>Всё в одних руках — без агентств и переводчиков</h2>
+    </div>
+    <div class="cards">
+      <div class="card reveal">
+        <span class="card-num">01</span>
+        <h3>Всё в одних руках</h3>
+        <p>Маркетинг и разработка — один человек. Не нужно объяснять идею сначала дизайнеру, потом заново программисту: смысл не теряется, а сроки не растягиваются на согласования.</p>
+      </div>
+      <div class="card reveal">
+        <span class="card-num">02</span>
+        <h3>Делаю с расчётом на заявки, а не «по ТЗ»</h3>
+        <p>Если вижу, что текст, структуру или путь клиента можно усилить, — предлагаю. Мне важно, чтобы продукт продавал, а не просто был формально сдан.</p>
+      </div>
+      <div class="card reveal">
+        <span class="card-num">03</span>
+        <h3>Объясняю по-человечески и остаюсь на связи</h3>
+        <p>Без технического тумана: что делаем и зачем — на нормальном языке. После запуска помогаю разобраться и поправить, если что-то понадобится.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="works" id="works">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">работы и результаты</span>
+      <h2>Что я делаю — и что это даёт</h2>
+    </div>
+
+    <!-- КАК ДОБАВИТЬ КЕЙС (по мере готовности):
+         1) скопировать cases/_template.html → cases/имя.html, заполнить разбор;
+         2) когда кейс готов — поменять href карточки с живого сайта на cases/имя.html
+            и текст ссылки на «смотреть кейс →» (сейчас карточки ведут на живые сайты);
+         3) положить скрин в visual/cases/ и заменить <span class="thumb-ph"> на
+            <img src="visual/cases/имя.jpg" alt="...">.
+         Карточки без кейса смотрятся самодостаточно — ссылка появляется только когда страница готова. -->
+
+    <div class="work-group reveal">
+      <h3>Лендинги <span>[ 3 проекта ]</span></h3>
+      <div class="work-grid">
+        <a class="work-card" href="https://xenaja.github.io/kochevnik/" target="_blank" rel="noopener">
+          <div class="work-thumb"><img src="visual/cases/kochevnik-thumb.jpg" alt="Лендинг ансамбля «Кочевник»" loading="lazy"></div>
+          <div class="work-body">
+            <div class="work-tags"><span>лендинг</span><span>ансамбль</span></div>
+            <div class="res">Яркий современный сайт ансамбля песни и пляски — передать атмосферу.</div>
+            <span class="work-more">смотреть сайт →</span>
+          </div>
+        </a>
+        <a class="work-card" href="https://kutkevich.ru" target="_blank" rel="noopener">
+          <div class="work-thumb"><img src="visual/cases/kutkevich-thumb.jpg" alt="Лендинг шоколадного производства KUTKEVICH" loading="lazy"></div>
+          <div class="work-body">
+            <div class="work-tags"><span>лендинг</span><span>шоколад</span><span>B2B</span></div>
+            <div class="res">Продающий B2B-сайт шоколадного производства — отразить бренд.</div>
+            <span class="work-more">смотреть сайт →</span>
+          </div>
+        </a>
+        <a class="work-card" href="https://polina-dudnikova.ru" target="_blank" rel="noopener">
+          <div class="work-thumb"><img src="visual/cases/polina-thumb.jpg" alt="Лендинг психолога Полины Дудниковой" loading="lazy"></div>
+          <div class="work-body">
+            <div class="work-tags"><span>лендинг</span><span>психолог</span></div>
+            <div class="res">Понятная и спокойная визитка психолога — вызвать доверие.</div>
+            <span class="work-more">смотреть сайт →</span>
+          </div>
+        </a>
+        <!-- Анастасия Анохина — скрыта, добавить позже. Ассеты готовы:
+             visual/cases/anastasia-thumb.jpg, anastasia.webp, cases/anastasia.html -->
+
+      </div>
+    </div>
+
+    <div class="work-group reveal">
+      <h3>Чат-боты <span>[ 2 проекта ]</span></h3>
+      <div class="work-grid two">
+        <div class="work-card">
+          <div class="work-thumb"><span class="thumb-ph">// диалог с ботом</span></div>
+          <div class="work-body">
+            <div class="work-tags"><span>чат-бот</span></div>
+            <div class="res">[ задача бота — добавим ]</div>
+            <span class="work-status live">работает · можно попробовать</span>
+          </div>
+        </div>
+        <div class="work-card">
+          <div class="work-thumb"><span class="thumb-ph">// диалог с ботом</span></div>
+          <div class="work-body">
+            <div class="work-tags"><span>чат-бот</span></div>
+            <div class="res">[ задача бота — добавим ]</div>
+            <span class="work-status">проект завершён · разбор в кейсе</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-group reveal">
+      <h3>Приложения</h3>
+      <p class="apps-text">Это направление я веду вместе с сильным разработчиком, который отвечает за серверную часть, базы данных и сложную логику. Мы беремся за продукты, где важна не только обложка, но и то, что под капотом. В портфолио — <strong>готовое приложение</strong> и второй, <strong>более сложный продукт в активной разработке</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <span>лендинги</span><i>//</i><span>чат-боты</span><i>//</i><span>приём оплат</span><i>//</i><span>интеграции</span><i>//</i><span>админка</span><i>//</i><span>маркетинг</span><i>//</i><span>дизайн</span><i>//</i><span>от 2 дней</span><i>//</i>
+    <span>лендинги</span><i>//</i><span>чат-боты</span><i>//</i><span>приём оплат</span><i>//</i><span>интеграции</span><i>//</i><span>админка</span><i>//</i><span>маркетинг</span><i>//</i><span>дизайн</span><i>//</i><span>от 2 дней</span><i>//</i>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">отзывы</span>
+      <h2>Что говорят клиенты</h2>
+    </div>
+    <div class="quotes">
+      <div class="quote reveal"><span class="mark">”</span><p>Хочу поблагодарить Ксению за тщательную проработку стиля, деталей, терпение к моему темпу и пожеланиям. Она учла все мои чаяния по дизайну и смыслу — и при этом, как профессионал, следила, чтобы сайт был современным и актуальным. Искренне рекомендую.</p><div class="who"><div class="ava"></div><div><b>Полина Дудникова</b><small>психолог</small></div></div></div>
+      <div class="quote reveal"><span class="mark">”</span><p>Сайт получился даже лучше, чем я могла себе представить! Очень красивый визуал, учтены все пожелания. С тобой легко работать — даже когда мне самой было сложно сформулировать запрос, ты всё словила на лету. Получаю комплименты от коллег про новый лендинг.</p><div class="who"><div class="ava"></div><div><b>Анастасия Анохина</b><small>тренер творческих состояний</small></div></div></div>
+      <div class="quote reveal"><span class="mark">”</span><p>Профессионализм в IT — в частности, настройка платёжных систем с привязкой к продающему боту. Порадовал и процесс, и результат: остались одни положительные впечатления. Рекомендую.</p><div class="who"><div class="ava"></div><div><b>Денис</b><small>продающий чат-бот с оплатой</small></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="myths">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">частые сомнения — честно</span>
+      <h2>Несколько вещей, которые пугают зря</h2>
+    </div>
+    <div class="myth-list">
+      <div class="myth reveal">
+        <div class="tag">На коде — это дорого</div>
+        <div class="ans">Не обязательно. Современные инструменты разработки сильно ускоряют процесс, поэтому сайт на коде сегодня <b>сопоставим по цене</b> с хорошей сборкой на платформе — а иногда выходит дешевле, потому что вы не платите за подписку на конструктор каждый месяц.</div>
+      </div>
+      <div class="myth reveal">
+        <div class="tag">Это долго</div>
+        <div class="ans">Лендинг — <b>от двух дней</b>. Я не верстаю каждый пиксель вручную месяцами: использую современный подход, который даёт скорость без потери качества и контроля.</div>
+      </div>
+      <div class="myth reveal">
+        <div class="tag">Я останусь привязан к одному разработчику</div>
+        <div class="ans">Наоборот. <b>Код остаётся вашим</b>, его может вести любой разработчик. А чтобы вы спокойно меняли контент сами, я делаю удобную админку — вы не привязаны ко мне ни в чём.</div>
+      </div>
+      <div class="myth reveal">
+        <div class="tag">Без программиста ничего не поменять</div>
+        <div class="ans">Сможете. Всё, что вы планируете менять регулярно — цены, расписание, акции, карточки, — выводится в <b>простую панель управления</b>. Открываете, правите, сохраняете.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="quiz-wrap reveal">
+      <div class="quiz-bar">
+        <div class="dots"><i></i><i></i><i></i></div>
+        <span class="fname">code_or_platform.quiz</span>
+      </div>
+      <div class="quiz-body">
+        <span class="eyebrow">помощник выбора</span>
+        <h2>Перед стартом стоит решить одну вещь: код или готовая платформа</h2>
+        <p class="quiz-intro">Сайт или бота можно собрать на готовом конструкторе или написать на коде. Это влияет на скорость, гибкость, уникальность и на то, насколько просто потом вносить изменения. Единственно верного ответа нет — всё зависит от вашей задачи. Ответьте на пару вопросов, и я подскажу.</p>
+
+        <div class="q-progress"><span class="lbl">01 / 04</span><div class="track"><div class="fill"></div></div></div>
+
+        <div class="quiz-stage">
+          <div class="q-step active" data-step="0">
+            <div class="q-text">Будете ли часто менять контент сами?</div>
+            <div class="q-opts">
+              <button class="q-opt" data-w="code">Нет или редко</button>
+              <button class="q-opt" data-w="admin">Да, но однотипное — расписание, цены, акции, карточки</button>
+              <button class="q-opt" data-w="platform">Да, постоянно и по-разному</button>
+            </div>
+          </div>
+          <div class="q-step" data-step="1">
+            <div class="q-text">Что для вас важнее?</div>
+            <div class="q-opts">
+              <button class="q-opt" data-w="code">Уникальный вид и скорость загрузки</button>
+              <button class="q-opt" data-w="platform">Полная самостоятельность в правках</button>
+            </div>
+          </div>
+          <div class="q-step" data-step="2">
+            <div class="q-text">Нужны ли нестандартные функции, анимации, интеграции?</div>
+            <div class="q-opts">
+              <button class="q-opt" data-w="code">Да, без этого не обойтись</button>
+              <button class="q-opt" data-w="platform">Нет, всё довольно стандартно</button>
+            </div>
+          </div>
+          <div class="q-step" data-step="3">
+            <div class="q-text">Это надолго или быстрая проверка идеи?</div>
+            <div class="q-opts">
+              <button class="q-opt" data-w="code">Делаю основательно и надолго</button>
+              <button class="q-opt" data-w="platform">Быстро проверить идею</button>
+            </div>
+          </div>
+
+          <div class="q-result" data-result>
+            <span class="badge" data-badge></span>
+            <h3 data-title></h3>
+            <p data-desc></p>
+            <div class="extra" data-extra></div>
+            <a href="#final" class="btn btn-primary">Обсудить задачу</a>
+            <button class="q-restart" data-restart>пройти заново</button>
+          </div>
+        </div>
+
+        <p class="quiz-foot">Я не стану уговаривать вас на код, если он вам не нужен. Это про вашу задачу, а не про мою выгоду.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">цены</span>
+      <h2>Сколько это стоит</h2>
+    </div>
+    <div class="price-grid">
+      <div class="price reveal">
+        <div class="term">от 2 дней</div>
+        <h3>Лендинги</h3>
+        <ul class="lines">
+          <li><span>Сайт-визитка</span><b>от 15 000</b></li>
+          <li><span>Полноценный лендинг</span><b>20–25 000</b></li>
+        </ul>
+      </div>
+      <div class="price reveal">
+        <div class="term">от 2 дней</div>
+        <h3>Чат-боты</h3>
+        <ul class="lines">
+          <li><span>Разработка под задачу</span><b>от 10 000</b></li>
+        </ul>
+      </div>
+      <div class="price reveal">
+        <div class="term">в паре с разработчиком</div>
+        <h3>Приложения</h3>
+        <p class="note">Серверная часть, базы данных и сложная логика — на сильном разработчике. Стоимость обсуждаем индивидуально под проект.</p>
+      </div>
+    </div>
+    <p class="price-foot reveal">Финальная цена зависит от сложности. Назову её после короткого разговора о задаче — без сюрпризов в конце.</p>
+  </div>
+</section>
+
+<section class="process">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">процесс</span>
+      <h2>Как работаем</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="n">01</div><div><h3>Знакомимся</h3><p>Вы рассказываете задачу. Можно без ТЗ.</p></div></div>
+      <div class="step reveal"><div class="n">02</div><div><h3>Формулируем</h3><p>Задаю вопросы и помогаю понять, что нужно на самом деле и какой результат считаем успехом.</p></div></div>
+      <div class="step reveal"><div class="n">03</div><div><h3>Собираю</h3><p>Структура, тексты, визуал — на основе ваших материалов или с нуля.</p></div></div>
+      <div class="step reveal"><div class="n">04</div><div><h3>Показываю и правлю</h3><p>Показываю рабочую версию, вношу правки до результата, который вам нравится.</p></div></div>
+      <div class="step reveal"><div class="n">05</div><div><h3>Запускаю</h3><p>Публикую, настраиваю, передаю админку. Дальше — на связи для поддержки.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">перед стартом</span>
+      <h2>Что обычно спрашивают перед началом работы</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item reveal">
+        <summary>А вдруг мне не понравится результат?</summary>
+        <div class="faq-body">Показываю работу по этапам, а не «всё в конце». Правки до версии, которая вам нравится, — это часть работы, а не доплата. А перед стартом согласуем направление, чтобы не уйти не туда.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>У меня нет ТЗ и я не разбираюсь в технике — получится?</summary>
+        <div class="faq-body">Да, это обычная ситуация. Я задаю вопросы и помогаю понять, что нужно на самом деле. От вас — рассказать про бизнес и задачу, остальное переведу на понятный язык.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Как проходит оплата?</summary>
+        <div class="faq-body">Просто: 50% предоплата, 50% после готовности. Финальную цену называю до старта, после короткого разговора, — без доплат «по ходу».</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Мы в разных городах — как это работает?</summary>
+        <div class="faq-body">Полностью удалённо: переписка и созвоны. Город не важен — так я работаю со всеми.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Что будет после запуска?</summary>
+        <div class="faq-body">Передаю доступы и, если нужно, простую админку — и остаюсь на связи для поддержки. Мелкие правки после запуска — не проблема.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="final">
+  <div class="wrap">
+    <div class="final-box reveal">
+      <h2>Расскажите о задаче</h2>
+      <p>Не обязательно с готовым ТЗ — помогу сформулировать, что нужно, и назову срок и цену после короткого разговора.</p>
+
+      <form class="lead-form" id="leadForm" novalidate>
+        <div class="field">
+          <label for="lf-name">Как вас зовут</label>
+          <input type="text" id="lf-name" name="name" placeholder="Имя" required maxlength="80" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="lf-contact">Куда ответить</label>
+          <input type="text" id="lf-contact" name="contact" placeholder="@telegram, телефон или почта" required maxlength="120">
+        </div>
+        <div class="field">
+          <label for="lf-task">Пара слов о задаче <span style="opacity:.6">— необязательно</span></label>
+          <textarea id="lf-task" name="task" placeholder="Что хочется сделать? Можно совсем коротко." maxlength="1500"></textarea>
+        </div>
+        <!-- ловушка для ботов: люди это поле не видят и не заполняют -->
+        <div class="hp" aria-hidden="true"><label>Не заполняйте<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
+        <label class="consent">
+          <input type="checkbox" name="consent" required>
+          <span>Я согласен(-на) на обработку персональных данных и принимаю <a href="privacy.html" target="_blank" rel="noopener">политику конфиденциальности</a>.</span>
+        </label>
+        <button type="submit" class="btn btn-primary" id="lf-submit">Отправить заявку</button>
+        <div class="form-status" id="lf-status" role="status" aria-live="polite"></div>
+      </form>
+
+      <div class="form-alt">или напрямую:</div>
+      <div class="contacts">
+        <a href="https://t.me/xenaja">Telegram</a>
+        <!-- TODO: вставить ссылку на профиль MAX -->
+        <a href="#">MAX</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<a href="#final" class="sticky-cta">Обсудить задачу</a>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> · разработка с заботой о результате · <a href="privacy.html">Политика конфиденциальности</a></div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* Hero: эффект печати подзаголовка (с уважением к prefers-reduced-motion) */
+  (function(){
+    const el = document.querySelector('.hero .lead .type');
+    if (!el) return;
+    let reduce = false;
+    try { reduce = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){}
+    if (reduce) return; // оставляем текст как есть, без анимации
+    const full = el.textContent;
+    el.textContent = '';
+    let i = 0;
+    const tick = () => {
+      el.textContent = full.slice(0, i);
+      if (i++ < full.length) setTimeout(tick, 36);
+    };
+    setTimeout(tick, 560); // старт после появления подзаголовка в каскаде
+  })();
+
+  /* Видео «обо мне»: пауза при prefers-reduced-motion — остаётся постер */
+  (function(){
+    const v = document.querySelector('.about-video');
+    if (!v) return;
+    try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) { v.removeAttribute('autoplay'); v.pause(); } } catch(e){}
+  })();
+
+  /* Scroll-reveal через IntersectionObserver */
+  (function(){
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+  })();
+
+  /* Квиз «код или платформа» */
+  (function(){
+    const steps = document.querySelectorAll('.q-step');
+    const stage = document.querySelector('.quiz-stage');
+    const resultEl = stage.querySelector('[data-result]');
+    const fill = document.querySelector('.q-progress .fill');
+    const lbl = document.querySelector('.q-progress .lbl');
+    const total = steps.length;
+    let current = 0;
+    const scores = { code: 0, platform: 0, admin: 0 };
+
+    const results = {
+      code: {
+        badge: 'Скорее код',
+        title: 'Вам подойдёт разработка на коде',
+        desc: 'Ваш случай — про уникальность, скорость и гибкость. На коде вы получите быстрый сайт без ограничений конструктора и сможете расти без переделок с нуля.',
+        extra: 'Обсудим детали и подберём решение точно под вашу задачу.'
+      },
+      platform: {
+        badge: 'Скорее платформа',
+        title: 'Вам, возможно, удобнее конструктор',
+        desc: 'Если важнее всего менять всё самостоятельно и проверить идею побыстрее — готовая платформа может закрыть задачу. И это нормально.',
+        extra: 'Честно скажу: уговаривать на код не буду. При желании помогу собрать аккуратно и на конструкторе.'
+      },
+      admin: {
+        badge: 'Код + админка',
+        title: 'Код вам не помешает — наоборот',
+        desc: 'Вы хотите менять контент сами, но он однотипный: расписание, цены, акции, карточки. Это не повод уходить на конструктор.',
+        extra: 'Я сделаю удобную админку, и вы будете спокойно менять всё сами, а сайт останется на коде — быстрым и без ограничений.'
+      },
+      both: {
+        badge: 'И то, и другое',
+        title: 'У вас есть выбор',
+        desc: 'По ответам оба пути рабочие. Тут стоит отталкиваться от бюджета, сроков и планов на будущее.',
+        extra: 'Давайте обсудим — подберу вариант под ваши цели и кошелёк, без давления.'
+      }
+    };
+
+    function showStep(i){
+      steps.forEach(s => s.classList.toggle('active', +s.dataset.step === i));
+      fill.style.width = ((i+1)/total*100) + '%';
+      lbl.textContent = '0'+(i+1)+' / 0'+total;
+    }
+
+    function finish(){
+      steps.forEach(s => s.classList.remove('active'));
+      fill.style.width = '100%';
+      lbl.textContent = 'готово';
+      let key;
+      if (scores.admin > 0 && scores.platform <= 1) key = 'admin';
+      else if (scores.code > scores.platform) key = 'code';
+      else if (scores.platform > scores.code) key = 'platform';
+      else key = 'both';
+      const r = results[key];
+      resultEl.querySelector('[data-badge]').textContent = r.badge;
+      resultEl.querySelector('[data-title]').textContent = r.title;
+      resultEl.querySelector('[data-desc]').textContent = r.desc;
+      resultEl.querySelector('[data-extra]').textContent = r.extra;
+      resultEl.classList.add('active');
+    }
+
+    stage.querySelectorAll('.q-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const w = btn.dataset.w;
+        if (w === 'admin') { scores.admin++; scores.code++; }
+        else scores[w]++;
+        current++;
+        if (current < total) showStep(current);
+        else finish();
+      });
+    });
+
+    resultEl.querySelector('[data-restart]').addEventListener('click', () => {
+      current = 0; scores.code = 0; scores.platform = 0; scores.admin = 0;
+      resultEl.classList.remove('active');
+      showStep(0);
+    });
+  })();
+
+  /* LEAD FORM → Telegram.
+     Заявка уходит POST-запросом на ваш эндпоинт, который пересылает её в Telegram.
+     Подставьте URL Cloudflare Worker (инструкция — в FORM-SETUP.md). */
+  (function(){
+    const ENDPOINT = 'https://YOUR-WORKER.workers.dev'; // TODO: вставить URL воркера
+    const form = document.getElementById('leadForm');
+    if (!form) return;
+    const btn = document.getElementById('lf-submit');
+    const status = document.getElementById('lf-status');
+
+    function setStatus(msg, type){ status.textContent = msg; status.className = 'form-status' + (type ? ' ' + type : ''); }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      setStatus('');
+
+      // honeypot: если бот заполнил скрытое поле — тихо «успех», ничего не шлём
+      if (form.company.value.trim()) { setStatus('Спасибо! Скоро свяжусь.', 'ok'); form.reset(); return; }
+
+      const name = form.name.value.trim();
+      const contact = form.contact.value.trim();
+      const task = form.task.value.trim();
+      if (!name || !contact) { setStatus('Заполните имя и контакт, пожалуйста.', 'err'); return; }
+      if (!form.consent.checked) { setStatus('Отметьте согласие на обработку персональных данных.', 'err'); return; }
+
+      btn.disabled = true;
+      const oldLabel = btn.textContent;
+      btn.textContent = 'Отправляю…';
+      try {
+        const res = await fetch(ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, contact, task, page: location.href })
+        });
+        if (!res.ok) throw new Error('bad status ' + res.status);
+        form.reset();
+        setStatus('Спасибо! Заявка отправлена — скоро свяжусь.', 'ok');
+      } catch (err) {
+        setStatus('Не получилось отправить. Напишите мне напрямую в Telegram: @xenaja', 'err');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = oldLabel;
+      }
+    });
+  })();
+
+  /* Спотлайт за курсором на карточках */
+  (function(){
+    try { if (matchMedia('(hover: none)').matches) return; } catch(e){} // на тач-устройствах не нужно
+    document.querySelectorAll('.card, .price, .quote, .step, .faq-item').forEach((el) => {
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

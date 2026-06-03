@@ -1,0 +1,22 @@
+# heavy / dev
+tools/
+node_modules/
+
+# исходники (не нужны на сайте)
+visual/cases/*.png
+visual/me-video.mp4
+
+# черновики и внутренние доки (не часть опубликованного сайта)
+landing.html
+concept-warm.html
+concept-bold.html
+/cases/
+TODO.md
+SKILL.md
+FORM-SETUP.md
+telegram-form-worker.js
+
+# os
+.DS_Store
+Thumbs.db
+*.log
