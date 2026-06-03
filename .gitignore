@@ -12,6 +12,7 @@ concept-warm.html
 concept-bold.html
 /cases/*
 !/cases/telo-pomnit.html
+!/cases/fuelmonitor.html
 TODO.md
 SKILL.md
 FORM-SETUP.md

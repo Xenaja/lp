@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FuelMonitor — платформа контроля топлива · кейс · Ксения Телегина</title>
+<meta name="description" content="Кейс: платформа FuelMonitor. Свели две независимые системы учёта без общего ключа в единую картину — entity resolution на грязных данных, multi-tenant, 350+ автотестов, продакшен.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0f0e0c; --bg-2:#14120f; --panel:#181610; --panel-2:#1d1b14;
+    --line:rgba(94,234,212,0.12); --line-soft:rgba(245,240,225,0.08);
+    --ink:#f3efe2; --ink-soft:#b6b0a0; --ink-faint:#7d776a;
+    --accent:#5eead4; --accent-dim:#3fbfac; --accent-glow:rgba(94,234,212,0.42);
+    --display:'Familjen Grotesk',system-ui,sans-serif; --body:'Hanken Grotesk',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+    --container:880px; --radius:16px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.7; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:var(--container); margin:0 auto; padding:0 22px; }
+  a { color:var(--accent); }
+  .back { display:inline-block; margin:32px 0 8px; font-family:var(--mono); font-size:0.85rem; color:var(--ink-faint); text-decoration:none; }
+  .back:hover { color:var(--accent); }
+
+  .eyebrow { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.05em; color:var(--accent); }
+  .eyebrow::before { content:"// "; opacity:0.6; }
+  .tags { display:flex; flex-wrap:wrap; gap:7px; margin:14px 0 0; }
+  .tags span { font-family:var(--mono); font-size:0.66rem; color:var(--accent); border:1px solid var(--line); border-radius:100px; padding:4px 10px; }
+
+  h1 { font-family:var(--display); font-weight:600; font-size:clamp(1.9rem,5vw,2.9rem); line-height:1.1; letter-spacing:-0.01em; margin:18px 0 0; }
+  .sub { font-family:var(--display); color:var(--ink-soft); font-size:1.15rem; margin-top:10px; }
+  .meta { display:grid; gap:8px; margin-top:22px; font-family:var(--mono); font-size:0.78rem; color:var(--ink-soft); }
+  .meta b { color:var(--ink); font-weight:500; }
+
+  section.case { padding:38px 0; border-bottom:1px solid var(--line-soft); }
+  section.case:last-of-type { border-bottom:none; }
+  h2 { font-family:var(--display); font-weight:600; font-size:1.45rem; margin-bottom:14px; }
+  p { color:var(--ink-soft); margin-bottom:14px; }
+  p strong, li strong { color:var(--ink); font-weight:600; }
+  .lead-p { font-size:1.08rem; }
+
+  /* технические вызовы */
+  .challenges { list-style:none; display:grid; gap:16px; }
+  .challenges li { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px 20px; }
+  .challenges b { display:block; color:var(--ink); font-size:1.05rem; margin-bottom:7px; }
+  .challenges b .n { font-family:var(--mono); color:var(--accent); font-size:0.82rem; margin-right:9px; }
+  .challenges p { margin:0; font-size:0.95rem; }
+
+  /* результаты — чеклист */
+  .checks { list-style:none; display:grid; gap:11px; }
+  .checks li { padding-left:28px; position:relative; color:var(--ink-soft); }
+  .checks li::before { content:"✓"; position:absolute; left:0; color:var(--accent); font-weight:700; }
+
+  .means { list-style:none; display:grid; gap:12px; }
+  .means li { padding-left:22px; position:relative; color:var(--ink-soft); }
+  .means li::before { content:"▸"; position:absolute; left:0; color:var(--accent); }
+
+  .cta { text-align:center; padding:54px 0 72px; }
+  .btn { display:inline-block; font-family:var(--body); font-weight:700; background:var(--accent); color:#06231f; padding:15px 30px; border-radius:12px; text-decoration:none; min-height:48px; }
+  .btn:hover { background:var(--accent-dim); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="../index.html#works">← все работы</a>
+
+    <header style="padding:8px 0 26px;">
+      <span class="eyebrow">кейс · инженерный</span>
+      <div class="tags"><span>приложение</span><span>платформа</span><span>интеграции</span></div>
+      <h1>FuelMonitor — платформа контроля топлива</h1>
+      <p class="sub">От продуктовых задач до инженерных вызовов</p>
+      <div class="meta">
+        <span>Класс задачи: <b>интеграция независимых источников · сопоставление сущностей без общего ключа · multi-tenant · «грязные» данные реального оборудования</b></span>
+        <span>Стек: <b>Python, Django, фоновые сервисы (watchdog, планировщик), gunicorn + nginx, systemd</b></span>
+        <span>Роль: <b>в партнёрстве</b> · Статус: <b>продакшен</b></span>
+      </div>
+    </header>
+
+    <section class="case">
+      <h2>Класс задач, который решает этот проект</h2>
+      <p class="lead-p">Многие бизнес-задачи сводятся к одному тяжёлому паттерну: <strong>есть несколько независимых систем, каждая знает свою часть правды, и нигде эти части не сведены воедино.</strong></p>
+      <p>Данные приходят в разных форматах, по разным каналам, с опечатками и пропусками, а общего идентификатора, по которому их можно связать, попросту не существует.</p>
+      <p>FuelMonitor — характерный пример. Две независимые системы учёта: одна знает, <strong>сколько ресурса выдали</strong>, другая — <strong>сколько реально дошло до получателя</strong>. Пока они порознь, расхождение доказать невозможно. Мы свели их в одно окно так, чтобы расхождение было видно автоматически по каждой операции.</p>
+    </section>
+
+    <section class="case">
+      <h2>Технические вызовы и как мы их решали</h2>
+      <ul class="challenges">
+        <li>
+          <b><span class="n">01</span>Сопоставление сущностей без общего идентификатора</b>
+          <p>Связать записи из двух систем, у которых нет общего ключа, а данные «грязные» — опечатки, разные раскладки, дубли, идентификатор внутри другого поля. Решение — <strong>многопроходный алгоритм</strong>: точное совпадение → нечёткое (с учётом опечаток) → вероятностное восстановление по косвенным признакам. Неуверенные совпадения система не «проглатывает» молча — спорные случаи уходят оператору на подтверждение в один клик.</p>
+        </li>
+        <li>
+          <b><span class="n">02</span>Интеграции с учётом несовершенства внешнего мира</b>
+          <p>Два разных канала: файловый обмен в реальном времени (несколько форматов, авто-восстановление после сбоев) и внешнее API с жёсткими лимитами (дробление запросов, мониторинг квоты, различение «нет данных» и «ошибка»). На каждый автоканал — ручной дубль на случай сбоя.</p>
+        </li>
+        <li>
+          <b><span class="n">03</span>Multi-tenant с гарантированной изоляцией</b>
+          <p>Один экземпляр обслуживает множество клиентов в иерархии «партнёр → клиент». Изоляция проходит сквозь всю систему на уровне архитектуры — чужие данные не увидеть даже правкой адресной строки. Проверяется отдельными автотестами.</p>
+        </li>
+        <li>
+          <b><span class="n">04</span>Контроль качества данных как часть продукта</b>
+          <p>Система сама помечает подозрительные записи по правилам — оператор идёт по списку проблем, а не разбирает всё подряд. Аномалии и противоречия между источниками поднимаются наверх автоматически.</p>
+        </li>
+        <li>
+          <b><span class="n">05</span>Производительность и надёжность под реальные объёмы</b>
+          <p>Пакетная обработка ускорила импорт в десятки раз (критично при тысячах операций в сутки). Тяжёлые пересчёты — только при реальных изменениях. Ключевые этапы логируются: при разборе инцидентов всегда понятно, где что произошло.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="case">
+      <h2>Результат</h2>
+      <ul class="checks">
+        <li>Разрозненные источники сведены в единую картину — расхождения видны автоматически по каждой операции.</li>
+        <li>Сопоставление без общего ключа работает на реальных грязных данных, со встроенным ручным контролем спорных случаев.</li>
+        <li>Производительность выдерживает реальные объёмы; изоляция данных гарантирована архитектурно.</li>
+        <li>350+ автотестов (парсеры, алгоритмы, контроль доступа, изоляция, сквозные сценарии), логирование, готовность к эксплуатации на боевом сервере.</li>
+      </ul>
+    </section>
+
+    <section class="case">
+      <h2>Что это значит для вашего проекта</h2>
+      <p>FuelMonitor — один из примеров того, какой уровень сложности мы берём. Делаем веб-сервисы и платформы под ключ — от понятных продуктовых задач до тех, где готового решения не существует и архитектуру с алгоритмами приходится проектировать с нуля.</p>
+      <ul class="means">
+        <li><strong>Проектируем архитектуру</strong>, которая выдержит рост — несколько клиентов, изоляция данных, реальные объёмы, надёжность.</li>
+        <li><strong>Придумываем алгоритмы под задачу</strong> — сопоставление, скоринг, восстановление пропусков там, где нет готовых библиотек.</li>
+        <li><strong>Доводим до продакшена</strong> — с тестами, логированием и эксплуатацией на боевом сервере, а не «демку, которая работает на чистых данных».</li>
+      </ul>
+      <p style="margin-top:16px;">Если у вас есть задача — от привычной до такой, за которую другие не берутся, — давайте обсудим.</p>
+    </section>
+
+    <div class="cta">
+      <a class="btn" href="../index.html#final">Обсудить вашу задачу</a>
+    </div>
+  </div>
+</body>
+</html>
