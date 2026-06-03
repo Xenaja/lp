@@ -59,7 +59,11 @@
   .checks li::before { content:"✓"; position:absolute; left:0; color:var(--accent); font-weight:700; }
   .outcome { background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:12px; padding:18px 20px; margin-top:20px; color:var(--ink); font-family:var(--display); font-size:1.1rem; line-height:1.4; }
 
-  .visual-ph { background:repeating-linear-gradient(135deg, rgba(94,234,212,0.05) 0 10px, transparent 10px 20px), var(--panel-2); border:1px solid var(--line-soft); border-radius:14px; height:220px; display:grid; place-items:center; color:var(--ink-faint); font-family:var(--mono); font-size:0.82rem; }
+  .shots { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .shots figure { margin:0; }
+  .shots img { width:100%; display:block; border:1px solid var(--line); border-radius:14px; box-shadow:0 14px 34px -18px rgba(0,0,0,0.85); }
+  .shots figcaption { margin-top:8px; font-family:var(--mono); font-size:0.72rem; color:var(--ink-faint); text-align:center; }
+  @media (min-width:640px){ .shots { grid-template-columns:repeat(3,1fr); gap:18px; } }
 
   .cta { text-align:center; padding:54px 0 72px; }
   .btn { display:inline-block; font-family:var(--body); font-weight:700; background:var(--accent); color:#06231f; padding:15px 30px; border-radius:12px; text-decoration:none; min-height:48px; }
@@ -128,8 +132,13 @@
 
     <section class="case">
       <h2>Как это выглядит</h2>
-      <!-- TODO: добавить скриншоты/видео экранов приложения в ../visual/cases/ -->
-      <div class="visual-ph">// экраны приложения — добавим скоро</div>
+      <div class="shots">
+        <figure><img src="../visual/cases/telo-1.jpg" alt="Главный экран дневника приложения «Тело помнит»" loading="lazy"><figcaption>Дневник</figcaption></figure>
+        <figure><img src="../visual/cases/telo-2.jpg" alt="Карта тела — выбор зоны напряжения" loading="lazy"><figcaption>Карта тела</figcaption></figure>
+        <figure><img src="../visual/cases/telo-3.jpg" alt="Трекер изменений со слайдерами состояния" loading="lazy"><figcaption>Трекер</figcaption></figure>
+        <figure><img src="../visual/cases/telo-4.jpg" alt="Мой путь — диагностика паттернов и итоги потока" loading="lazy"><figcaption>Мой путь</figcaption></figure>
+        <figure><img src="../visual/cases/telo-5.jpg" alt="Мой поток — итоги программы и доступ к чату" loading="lazy"><figcaption>Мой поток</figcaption></figure>
+      </div>
     </section>
 
     <div class="cta">
