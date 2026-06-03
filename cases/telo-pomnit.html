@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>«Тело помнит» — Telegram Mini App · кейс · Ксения Телегина</title>
+<meta name="description" content="Кейс: Telegram Mini App для онлайн-программы телесной терапии «Тело помнит». Дневник тела, AI-ассистент, аналитика — программа из Zoom-встреч стала продуктом с измеримым результатом.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0f0e0c; --bg-2:#14120f; --panel:#181610; --panel-2:#1d1b14;
+    --line:rgba(94,234,212,0.12); --line-soft:rgba(245,240,225,0.08);
+    --ink:#f3efe2; --ink-soft:#b6b0a0; --ink-faint:#7d776a;
+    --accent:#5eead4; --accent-dim:#3fbfac; --accent-glow:rgba(94,234,212,0.42);
+    --display:'Familjen Grotesk',system-ui,sans-serif; --body:'Hanken Grotesk',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+    --container:880px; --radius:16px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.7; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:var(--container); margin:0 auto; padding:0 22px; }
+  a { color:var(--accent); }
+  .back { display:inline-block; margin:32px 0 8px; font-family:var(--mono); font-size:0.85rem; color:var(--ink-faint); text-decoration:none; }
+  .back:hover { color:var(--accent); }
+
+  .eyebrow { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.05em; color:var(--accent); }
+  .eyebrow::before { content:"// "; opacity:0.6; }
+  .tags { display:flex; flex-wrap:wrap; gap:7px; margin:14px 0 0; }
+  .tags span { font-family:var(--mono); font-size:0.66rem; color:var(--accent); border:1px solid var(--line); border-radius:100px; padding:4px 10px; }
+
+  h1 { font-family:var(--display); font-weight:600; font-size:clamp(1.9rem,5vw,2.9rem); line-height:1.1; letter-spacing:-0.01em; margin:18px 0 0; }
+  .meta { display:flex; flex-wrap:wrap; gap:18px; margin-top:22px; font-family:var(--mono); font-size:0.8rem; color:var(--ink-soft); }
+  .meta b { color:var(--ink); font-weight:500; }
+
+  section.case { padding:38px 0; border-bottom:1px solid var(--line-soft); }
+  section.case:last-of-type { border-bottom:none; }
+  h2 { font-family:var(--display); font-weight:600; font-size:1.45rem; margin-bottom:14px; }
+  p { color:var(--ink-soft); margin-bottom:14px; }
+  p strong, li strong { color:var(--ink); font-weight:600; }
+  .lead-p { font-size:1.08rem; }
+
+  /* список болей */
+  .pains { list-style:none; display:grid; gap:10px; }
+  .pains li { padding-left:22px; position:relative; color:var(--ink-soft); }
+  .pains li::before { content:"→"; position:absolute; left:0; color:var(--accent); }
+
+  /* что внутри — фичи */
+  .feat { list-style:none; display:grid; gap:12px; margin-top:6px; }
+  @media (min-width:640px){ .feat { grid-template-columns:1fr 1fr; } }
+  .feat li { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:15px 17px; }
+  .feat b { color:var(--ink); font-weight:600; display:block; }
+  .feat span { display:block; color:var(--ink-soft); font-size:0.9rem; margin-top:4px; line-height:1.45; }
+
+  /* результаты — чеклист */
+  .checks { list-style:none; display:grid; gap:11px; }
+  .checks li { padding-left:28px; position:relative; color:var(--ink-soft); }
+  .checks li::before { content:"✓"; position:absolute; left:0; color:var(--accent); font-weight:700; }
+  .outcome { background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:12px; padding:18px 20px; margin-top:20px; color:var(--ink); font-family:var(--display); font-size:1.1rem; line-height:1.4; }
+
+  .visual-ph { background:repeating-linear-gradient(135deg, rgba(94,234,212,0.05) 0 10px, transparent 10px 20px), var(--panel-2); border:1px solid var(--line-soft); border-radius:14px; height:220px; display:grid; place-items:center; color:var(--ink-faint); font-family:var(--mono); font-size:0.82rem; }
+
+  .cta { text-align:center; padding:54px 0 72px; }
+  .btn { display:inline-block; font-family:var(--body); font-weight:700; background:var(--accent); color:#06231f; padding:15px 30px; border-radius:12px; text-decoration:none; min-height:48px; }
+  .btn:hover { background:var(--accent-dim); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="../index.html#works">← все работы</a>
+
+    <header style="padding:8px 0 26px;">
+      <span class="eyebrow">кейс</span>
+      <div class="tags"><span>приложение</span><span>Telegram Mini App</span><span>психология</span></div>
+      <h1>«Тело помнит» — Telegram Mini App</h1>
+      <div class="meta">
+        <span>Роль: <b>продукт и позиционирование</b></span>
+        <span>Разработка: <b>в партнёрстве</b></span>
+        <span>Статус: <b>реализовано</b></span>
+      </div>
+    </header>
+
+    <section class="case">
+      <h2>С чего всё началось</h2>
+      <p class="lead-p">«Тело помнит» — онлайн-программа интегративной телесной терапии: 5 недель, 9 живых встреч в Zoom, закрытый поток.</p>
+      <p>Программа работала, результаты были. Но одна системная проблема съедала их: <strong>между сессиями участницы «исчезали»</strong>. Инсайт со встречи угасал за день-два — и к следующей сессии человек приходил как с чистого листа. Не из-за лени, а из-за отсутствия инструмента, который помогает продолжать работу между встречами.</p>
+      <ul class="pains">
+        <li>Дневник тела не вёлся регулярно — заметки в телефоне, которые никто не читает.</li>
+        <li>Триггеры и острые реакции терялись — момент уходил непроработанным.</li>
+        <li>Ведущая работала вслепую — без данных о том, что происходит между встречами.</li>
+        <li>Не было наглядных доказательств результата для следующих продаж.</li>
+        <li>Чат засорялся повторяющимися вопросами: «где ссылка на Zoom?», «во сколько встреча?».</li>
+      </ul>
+    </section>
+
+    <section class="case">
+      <h2>Решение</h2>
+      <p><strong>Telegram Mini App — приложение прямо внутри Telegram.</strong> Открывается одной кнопкой в боте: не нужно ничего скачивать, регистрироваться или куда-то переходить — участница уже в Telegram, инструмент там же.</p>
+      <p>Для тех, кто ещё не в потоке, приложение видно, но закрыто — это создаёт ощущение закрытого клуба и дополнительно мотивирует к покупке.</p>
+    </section>
+
+    <section class="case">
+      <h2>Что внутри</h2>
+      <ul class="feat">
+        <li><b>Дневник тела</b><span>Интерактивная карта тела: нажать на зону, выбрать ощущение, добавить заметку. История записей + напоминания от бота.</span></li>
+        <li><b>Экспорт дневника в PDF</b><span>Весь путь по датам, зонам и ощущениям — в один клик. Наглядное доказательство работы.</span></li>
+        <li><b>Дневник стоп-реакций</b><span>Фиксация триггеров: что случилось, какая зона отреагировала, интенсивность 1–10, заметка.</span></li>
+        <li><b>AI-ассистент</b><span>Проработать острый момент здесь и сейчас, не дожидаясь следующей сессии.</span></li>
+        <li><b>Диагностика паттернов</b><span>Тест в начале программы: участница узнаёт свой паттерн поведения в стрессе.</span></li>
+        <li><b>Еженедельный чекин с графиком</b><span>Короткий чекин о состоянии — динамика по неделям строится автоматически.</span></li>
+        <li><b>Анкеты до и после</b><span>Измеримый результат: что было до, что изменилось после — для маркетинга и кейсов.</span></li>
+        <li><b>Отзывы, расписание, чат</b><span>Отзывы сразу к ведущей; все даты и ссылки на Zoom; связь с потоком и ведущей — из приложения.</span></li>
+      </ul>
+    </section>
+
+    <section class="case">
+      <h2>Что получила ведущая</h2>
+      <ul class="checks">
+        <li>Участницы работают между сессиями — дневник, стоп-реакции, чекины.</li>
+        <li>Аналитика по каждой: что болело до и что изменилось после.</li>
+        <li>Доказательство эффективности — в цифрах и записях, а не просто «стало лучше».</li>
+        <li>Готовый материал для маркетинга — анкеты до/после, отзывы, динамика.</li>
+        <li>Чат освободился от повторяющихся вопросов, участницы не теряются между встречами.</li>
+      </ul>
+      <div class="outcome">Программа из набора Zoom-встреч стала продуктом с измеримым результатом. Приложение не заменяет работу ведущей — усиливает и продлевает её между сессиями.</div>
+    </section>
+
+    <section class="case">
+      <h2>Как это выглядит</h2>
+      <!-- TODO: добавить скриншоты/видео экранов приложения в ../visual/cases/ -->
+      <div class="visual-ph">// экраны приложения — добавим скоро</div>
+    </section>
+
+    <div class="cta">
+      <a class="btn" href="../index.html#final">Обсудить своё приложение</a>
+    </div>
+  </div>
+</body>
+</html>

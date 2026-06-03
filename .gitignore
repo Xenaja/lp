@@ -10,7 +10,8 @@ visual/me-video.mp4
 landing.html
 concept-warm.html
 concept-bold.html
-/cases/
+/cases/*
+!/cases/telo-pomnit.html
 TODO.md
 SKILL.md
 FORM-SETUP.md

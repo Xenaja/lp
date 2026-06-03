@@ -275,6 +275,10 @@
   .mini-chat .b { max-width: 82%; font-size: 0.74rem; line-height: 1.32; padding: 7px 11px; border-radius: 12px; font-family: var(--body); }
   .mini-chat .b.bot { background: var(--panel); color: var(--ink-soft); border: 1px solid var(--line-soft); border-top-left-radius: 3px; align-self: flex-start; }
   .mini-chat .b.user { background: var(--accent); color: #06231f; font-weight: 500; border-top-right-radius: 3px; align-self: flex-end; }
+  /* карточка приложения */
+  .app-card { max-width: 460px; }
+  .work-thumb.app-thumb { background: var(--bg-2); }
+  .work-thumb.app-thumb::before { content: none; }
 
   /* ---- TESTIMONIALS ---- */
   .quotes { display: grid; grid-template-columns: 1fr; gap: 18px; }
@@ -684,7 +688,16 @@
 
     <div class="work-group reveal">
       <h3>Приложения</h3>
-      <p class="apps-text">Это направление я веду вместе с сильным разработчиком, который отвечает за серверную часть, базы данных и сложную логику. Мы беремся за продукты, где важна не только обложка, но и то, что под капотом. В портфолио — <strong>готовое приложение</strong> и второй, <strong>более сложный продукт в активной разработке</strong>.</p>
+      <p class="apps-text">Сложные приложения делаю <strong>в партнёрстве с разработчиком</strong>: на мне — продукт, смыслы и позиционирование, на партнёре — серверная часть, базы данных и сложная логика. Берёмся за продукты, где важна не только обложка, но и то, что под капотом. Ещё один, более сложный продукт сейчас в активной разработке.</p>
+      <a class="work-card app-card" href="cases/telo-pomnit.html">
+        <div class="work-thumb app-thumb"><span class="thumb-ph">Telegram Mini App</span></div>
+        <div class="work-body">
+          <div class="work-tags"><span>приложение</span><span>Telegram Mini App</span><span>психология</span></div>
+          <div class="work-name">«Тело помнит» — Mini App</div>
+          <div class="work-desc">Приложение для онлайн-программы телесной терапии: дневник тела, AI-ассистент, аналитика. Программа из Zoom-встреч стала продуктом с измеримым результатом.</div>
+          <span class="work-more">смотреть кейс →</span>
+        </div>
+      </a>
     </div>
   </div>
 </section>
