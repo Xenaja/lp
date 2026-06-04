@@ -23,7 +23,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"></noscript>
 <style>
   :root {
     /* ---- Палитра: тёмный тёплый уголь + один холодный акцент ---- */
@@ -608,7 +609,7 @@
   <div class="wrap">
     <div class="about-grid">
       <div class="about-photo reveal">
-        <video class="about-video" autoplay muted loop playsinline preload="metadata" poster="visual/me-poster.jpg" aria-label="Ксения Телегина">
+        <video class="about-video" muted loop playsinline preload="none" poster="visual/me-poster.jpg" aria-label="Ксения Телегина">
           <source src="visual/me-loop.mp4" type="video/mp4">
         </video>
       </div>
@@ -1037,7 +1038,16 @@
   (function(){
     const v = document.querySelector('.about-video');
     if (!v) return;
-    try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) { v.removeAttribute('autoplay'); v.pause(); } } catch(e){}
+    let reduce = false;
+    try { reduce = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){}
+    if (reduce) return; // оставляем постер, без автопроигрывания
+    // ленивый автоплей: грузим и запускаем видео только когда блок «обо мне» в зоне видимости
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((ents) => {
+        ents.forEach((e) => { if (e.isIntersecting) { v.play().catch(() => {}); io.unobserve(v); } });
+      }, { threshold: 0.25 });
+      io.observe(v);
+    } else { v.play().catch(() => {}); }
   })();
 
   /* Scroll-reveal через IntersectionObserver */
