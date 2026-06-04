@@ -1,5 +1,6 @@
 # heavy / dev
 tools/
+worker/
 node_modules/
 
 # исходники (не нужны на сайте)
