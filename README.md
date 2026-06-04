@@ -57,10 +57,17 @@ node tools/capture.js
 
 ## Форма заявки
 
-Сейчас в `index.html` стоит заглушка: `const ENDPOINT = 'https://YOUR-WORKER.workers.dev'`.
-Заявка с формы пока не уходит (рабочие каналы связи — Telegram и MAX в футере).
-Настройка боевой формы — по `FORM-SETUP.md`: бот в @BotFather → chat_id → Cloudflare Worker
-(прячет токен) → вставить URL воркера в `ENDPOINT`.
+Подключена и работает: форма → **Cloudflare Worker** `lead-form` (`lead-form.xenonline77.workers.dev`)
+→ Telegram-бот. Токен бота и `chat_id` лежат в секретах воркера (в коде сайта их нет).
+CORS ограничен origin `https://xenaja.github.io`. На стороне формы — honeypot и чекбокс согласия.
+
+Конфиг деплоя — в `worker/` (в `.gitignore`): `wrangler.toml` + установленный Wrangler.
+- Обновить воркер: `cd worker && npx wrangler deploy`
+- Поменять секреты: `npx wrangler secret bulk secrets.json` (файл `{"BOT_TOKEN":"...","CHAT_ID":"..."}`,
+  после — удалить). **Важно:** не задавать секреты через `echo "x" | wrangler secret put` —
+  PowerShell добавляет перевод строки и значение ломается; используйте `secret bulk`.
+
+Исходник воркера — `telegram-form-worker.js`. Подробности — `FORM-SETUP.md`.
 
 ## 152-ФЗ
 
