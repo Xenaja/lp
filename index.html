@@ -121,6 +121,7 @@
   .nav-links.open { transform: none; }
   .nav-links a { font-family: var(--mono); font-size: 1.15rem; color: var(--ink-soft); text-decoration: none; transition: color .2s ease; }
   .nav-links a:hover { color: var(--accent); }
+  .nav-links a.active { color: var(--accent); }
   .nav-links a.nav-cta { border: 1px solid var(--accent-dim); color: var(--accent); padding: 12px 26px; border-radius: 100px; background: rgba(94,234,212,0.06); min-height: 48px; display: inline-flex; align-items: center; touch-action: manipulation; }
   .nav-links a.nav-cta:hover { background: var(--accent); color: #06231f; border-color: var(--accent); }
   body.menu-open { overflow: hidden; }
@@ -467,6 +468,22 @@
     box-shadow: 0 12px 30px -8px var(--accent-glow); touch-action: manipulation; -webkit-tap-highlight-color: transparent;
   }
   .sticky-cta::before { content: "›"; }
+
+  /* ---- КНОПКА «НАВЕРХ» ---- */
+  .to-top {
+    position: fixed; right: 16px; bottom: calc(82px + env(safe-area-inset-bottom)); z-index: 55;
+    width: 46px; height: 46px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--panel-2); border: 1px solid var(--line); color: var(--accent);
+    font-size: 1.3rem; line-height: 1; cursor: pointer;
+    box-shadow: 0 10px 26px -10px rgba(0,0,0,0.85);
+    opacity: 0; visibility: hidden; transform: translateY(8px);
+    transition: opacity .25s ease, transform .25s ease, visibility .25s, border-color .2s ease, background .2s ease;
+    touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+  }
+  .to-top.show { opacity: 1; visibility: visible; transform: none; }
+  .to-top:hover { border-color: var(--accent); background: var(--panel); }
+  @media (min-width: 1024px) { .to-top { right: 28px; bottom: 28px; } }
 
   /* ============ TABLET ≥640px ============ */
   @media (min-width: 640px) {
@@ -986,6 +1003,7 @@
 </main>
 
 <a href="#final" class="sticky-cta">Обсудить задачу</a>
+<button type="button" class="to-top" aria-label="Наверх">↑</button>
 
 <footer>
   <div class="wrap">© <span id="yr"></span> · разработка с заботой о результате · <a href="privacy.html">Политика конфиденциальности</a></div>
@@ -1181,6 +1199,40 @@
     toggle.addEventListener('click', () => setOpen(!links.classList.contains('open')));
     links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+  })();
+
+  /* Кнопка «наверх» */
+  (function(){
+    const btn = document.querySelector('.to-top');
+    if (!btn) return;
+    const onScroll = () => btn.classList.toggle('show', window.scrollY > 600);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    let smooth = true;
+    try { smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){}
+    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' }));
+  })();
+
+  /* Scroll-spy: подсветка активного пункта меню */
+  (function(){
+    if (!('IntersectionObserver' in window)) return;
+    const linkFor = {};
+    document.querySelectorAll('.nav-links a').forEach((a) => {
+      const href = a.getAttribute('href') || '';
+      if (href.startsWith('#') && href.length > 1) linkFor[href.slice(1)] = a;
+    });
+    const sections = ['about','works','pricing'].map((id) => document.getElementById(id)).filter(Boolean);
+    if (!sections.length) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const a = linkFor[e.target.id];
+        if (!a) return;
+        Object.values(linkFor).forEach((l) => l.classList.remove('active'));
+        a.classList.add('active');
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    sections.forEach((s) => io.observe(s));
   })();
 </script>
 
